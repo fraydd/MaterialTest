@@ -7,3 +7,4 @@ if __name__ == "__main__":
     monitor = Monitor()
     monitor.show()
     app.exec_()
+# Comentario para verificar el push
