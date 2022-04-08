@@ -43,7 +43,7 @@ class Monitor(QtWidgets.QMainWindow):
             if self.serial.in_waiting > 0:
                 data = self.serial.read().decode('utf-8')
                 if data == '!':
-                    self.ui.textEdit.append('El monitor serie obtuvo el mensaje: ' + self.message)
+                    self.ui.textEdit.append('El monitor Serie obtuvo el mensaje: ' + self.message)
                     self.recognize()
                     self.message = ''
                     data = ''
