@@ -4,6 +4,12 @@ from PyQt5 import QtCore
 import serial
 import serial.tools.list_ports as list_ports
 
+TAGS = {
+    'P1F': 'lectura de Fuerza en el Pistón 1',
+    'P2F': 'Lectura de Fuerza en el Pistón 2',
+    'P3F': 'Lectura de Fuerza en el Pistón 3'
+}
+
 
 class Monitor(QtWidgets.QMainWindow):
     def __init__(self):
@@ -52,8 +58,12 @@ class Monitor(QtWidgets.QMainWindow):
     def recognize(self):
         tag = self.message[0:3]
         value = self.message[3:]
-        self.ui.textEdit.append('El mensaje tiene la etiqueta: ' + tag)
+        self.define_tag(tag)
         self.ui.textEdit.append('El mensaje tiene el valor: ' + value)
+
+    def define_tag(self, tag):
+        if tag in TAGS:
+            self.ui.textEdit.append('Se obtuvo una ' + TAGS[tag])
 
     def __del__(self):
         if self.serial.is_open:
