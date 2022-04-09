@@ -6,8 +6,8 @@ import serial.tools.list_ports as list_ports
 
 TAGS = {
     'P1F': 'lectura de Fuerza en el Pistón 1',
-    'P2F': 'Lectura de Fuerza en el Pistón 2',
-    'P3F': 'Lectura de Fuerza en el Pistón 3'
+    'P2F': 'lectura de Fuerza en el Pistón 2',
+    'P3F': 'lectura de Fuerza en el Pistón 3'
 }
 
 
@@ -49,7 +49,6 @@ class Monitor(QtWidgets.QMainWindow):
             if self.serial.in_waiting > 0:
                 data = self.serial.read().decode('utf-8')
                 if data == '!':
-                    self.ui.textEdit.append('El monitor Serie obtuvo el mensaje: ' + self.message)
                     self.recognize()
                     self.message = ''
                     data = ''
@@ -58,12 +57,11 @@ class Monitor(QtWidgets.QMainWindow):
     def recognize(self):
         tag = self.message[0:3]
         value = self.message[3:]
-        self.define_tag(tag)
-        self.ui.textEdit.append('El mensaje tiene el valor: ' + value)
-
-    def define_tag(self, tag):
         if tag in TAGS:
             self.ui.textEdit.append('Se obtuvo una ' + TAGS[tag])
+            self.ui.textEdit.append('Con el siguiente valor: ' + value)
+        else:
+            self.ui.textEdit.append('Etiqueta no reconocida')
 
     def __del__(self):
         if self.serial.is_open:
